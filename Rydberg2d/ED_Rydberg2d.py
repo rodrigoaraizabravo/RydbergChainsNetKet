@@ -1,12 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 26 15:57:10 2018
-
-@author: oscar
-"""
-
 from quspin.operators import hamiltonian
 from quspin.basis import spin_basis_1d
+from Utils_2D import get_kn_interactions, get_sent2
 import numpy as np 
 import json
 from mpl_toolkits.mplot3d import Axes3D
@@ -24,27 +18,6 @@ def zz_op(i,j, basis, check_symm=True, dtype=np.float64):
     dynamic = []
     return hamiltonian(static, dynamic, basis=basis, dtype = dtype, check_symm = check_symm)
 
-def distance(i,j,L):
-    dx = abs(i-j)
-    dx = np.abs(dx % L)
-    return min(dx, L-dx)
-
-def Vlist(V, L, ktrunc):
-    l = []
-    for i in range(L):
-        for j in range(i+1,L):
-            d = distance(i,j,L)
-            if d<= ktrunc : l.append([V/(d**6), i, j])
-    return l
-
-def get_sent(psi, basis, subsys=None, return_rdm=None):
-    sdict= basis.ent_entropy(psi, sub_sys_A=subsys,return_rdm=return_rdm, alpha=1.0)
-    SA= sdict['Sent_A'] * len(subsys) 
-    if return_rdm is not None:
-        sdict['Sent_A']=SA        
-        return sdict
-    return SA
-
 def Ryd_Hamiltonian(L, Vlist, h_z, h_x, basis):    # PBC
     LF=[[-h_x,i] for i in range(L)]
     TF=[[-h_z,i] for i in range(L)]
@@ -55,11 +28,13 @@ def Ryd_Hamiltonian(L, Vlist, h_z, h_x, basis):    # PBC
     return energy, psi  
 
 #Setting parameters of our Hamiltonian
-L = 20
+Lx = 3
+Ly = 3
+L = Lx*Ly
 V = 1
 ktrunc = 10
 D = 0
-Vs = Vlist(V/4,L,ktrunc)
+Vs = get_kn_interactions(V, ktrunc, Lx, Ly)
 Vbar = np.sum([4*Vs[i][0] for i in range(len(Vs))])
 basis = spin_basis_1d(L)
 
