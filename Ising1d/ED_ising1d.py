@@ -63,6 +63,7 @@ h = 1
 basis = spin_basis_1d(L)
 energy, psi = make_tlfi(L, J, I, h, basis)
 print(energy)
+=======
 from quspin.operators import hamiltonian
 from quspin.basis import spin_basis_1d, boson_basis_1d
 import numpy as np 

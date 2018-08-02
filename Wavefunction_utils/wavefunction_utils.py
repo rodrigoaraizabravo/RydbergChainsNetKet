@@ -153,19 +153,27 @@ def wf_symm(L, asymm, bsymm, Wsymm, basis):
     #Checking
     if np.sum(np.abs(c)**2) - 1 < 1e-3: print("Wave function normalized!")
     else: print("Norm is %f" %np.sum(np.abs(c)**2))
-        
+    
     return c
 '''These functions are auxiliary functions'''
 def sigmax():
     return np.array([[0,1],[1,0]])
 def sigmaz():
     return np.array([[1,0],[0,1]])
-def zz():
+def sigmazsigmaz():
     return np.kron(sigmaz(), sigmaz())
 def n():
     return 1/2*(sigmax()+np.identity(2))
 def nn():
     return np.kron(n(),n())
+def z(i, L):
+    op_base = [np.identity(2) for i in range(L)]
+    op_base[i] = sigmaz()
+    return constr_op(op_base)
+def zz(i,j, L):
+    op_base = [np.identity(2) for i in range(L)]
+    op_base[i], op_base[j] = sigmaz(), sigmaz()
+    return constr_op(op_base)
 def constr_op(oplist):
     """ given a list of local ops, return the tensor product """
     o = oplist[0]
