@@ -25,9 +25,9 @@ def zz_op(i,j, basis, check_symm=True, dtype=np.float64):
     return hamiltonian(static, dynamic, basis=basis, dtype = dtype, check_symm = check_symm)
 
 def distance(i,j,L):
-    d_traditional = abs(i-j)
-    d_ring = abs((i+L-j)%L)
-    return min(d_traditional, d_ring)
+    dx = abs(i-j)
+    dx = np.abs(dx % L)
+    return min(dx, L-dx)
 
 def Vlist(V, L, ktrunc):
     l = []

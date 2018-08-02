@@ -8,9 +8,9 @@ import json
 
 '''Auxiliary Functions'''
 def distance(i,j, L):
-    d_c = abs(i-j)
-    d_m = abs(i+L-j)%L
-    return min(d_c, d_m)
+    dx = abs(i-j)
+    dx = np.abs(dx % L)
+    return min(dx, L-dx)
 def Vlist(V, L, ktrunc):
     l = []
     for i in range(L):
