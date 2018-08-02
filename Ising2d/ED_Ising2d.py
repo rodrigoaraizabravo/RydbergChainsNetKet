@@ -1,6 +1,6 @@
 from quspin.operators import hamiltonian
 from quspin.basis import spin_basis_1d
-from Utils_2D.py import get_nn_interactions, get_sent2
+from Utils_2D import get_nn_interactions, get_sent2
 import numpy as np 
 import json
 import matplotlib.pyplot as plt
@@ -31,13 +31,13 @@ def make_tlfi(L, InterList, I, h, basis):
 '''The following Code is meant to give us plots for energy, entanglement
    entropy, Z1, Z2, Z1Z1 for a cut in parameter space of the Ising1d model'''
 #Defining the parameters for our Hamiltonian
-Lx = 3
-Ly = 3
+Lx = 12
+Ly = 1
 L = Lx*Ly
 J = 1
 I = 0
-h = 1
+h = 0
 basis = spin_basis_1d(L)
 InterList = get_nn_interactions(J, Lx, Ly)
-energy, psi = make_tlfi(L, InterList, I, h, basis
+energy, psi = make_tlfi(L, InterList, I, h, basis)
 print(energy)

@@ -159,7 +159,7 @@ def wf_symm(L, asymm, bsymm, Wsymm, basis):
 def sigmax():
     return np.array([[0,1],[1,0]])
 def sigmaz():
-    return np.array([[1,0],[0,1]])
+    return np.array([[1,0],[0,-1]])
 def sigmazsigmaz():
     return np.kron(sigmaz(), sigmaz())
 def n():
