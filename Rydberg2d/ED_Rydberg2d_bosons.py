@@ -29,51 +29,18 @@ def Ryd_Hamiltonian_bosons(L, Vlist, Delta, Omega, basis):    # PBC
     return energy, psi  
 
 #Setting parameters of our Hamiltonian
-Lx = 4
-Ly = 1
+Lx = 3
+Ly = 3
 L = Lx*Ly
 V = 1
-ktrunc = 4
+ktrunc = 3
 D = 0
 Vs = get_kn_interactions(V, ktrunc, Lx, Ly)
 Vbar = np.sum([Vs[i][0] for i in range(len(Vs))])
 basis = boson_basis_1d(L, sps =2)
+O =0.1
 
-#Moving parameters
-O_min, O_max = 0, 1
-Nsamples = 10
-O = np.linspace(O_min, O_max, Nsamples)
-
-#Defining a bsis and list to store the values of the obsevables' exp vals
-GE = []
-ent_entropy = []
-n1_exp = []
-nn12_exp = []
-n1_op = n_op(0,basis)
-nn12_op = nn_op(0,1, basis)
-
-#Defining a subsystem for the entanglement entropy and the operators
-half=[i for i in range(L//2)]
-qrtr=[i for i in range(L//4)]
-
-#Mining the information for the cut
-for i in range(Nsamples):
-    energy0, psi0 = Ryd_Hamiltonian_bosons(L, Vs, D, O[i], basis)  
-    GE.append(energy0)
-    ent_entropy.append(get_sent2(psi0, basis, half))
-    n1_exp.append(n1_op.expt_value(psi0))
-    nn12_exp.append(nn12_op.expt_value(psi0))
-
-plt.figure()
-plt.plot(O, GE)
-plt.show()
-
-plt.figure()
-plt.plot(O, n1_exp)
-plt.show()
-
-plt.figure()
-plt.plot(O, nn12_exp)
-plt.show()
+energy0, psi0 = Ryd_Hamiltonian_bosons(L, Vs, D, O, basis)  
+print(energy0)
 
         
